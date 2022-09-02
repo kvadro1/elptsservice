@@ -1,14 +1,14 @@
 import ExampleUsecase from '../src/usecases/ExampleUsecase.js';
-import FileService from '../src/services/ExampleService.js';
+import FileService from '../src/services/FileService.js';
 import ExampleRepository from '../src/repositories/ExampleRepository.js';
 import prisma from '../libs/prisma/prisma.js';
+import fs from 'fs';
 
-const usecase = new ExampleUsecase({});
+const usecase = new ExampleUsecase({ path: 'exampleFile.txt' });
 
 test('Example index', async () => {
   expect(
     await usecase.index({
-      exampleService: new FileService(),
       exampleRepository: new ExampleRepository({ prisma })
     })
   ).toEqual({ text: 'index' });
@@ -31,5 +31,13 @@ test('Example delete', async () => {
 });
 
 test('Example print', async () => {
-  expect(await usecase.print('exampleFile.txt')).toEqual({ text: 'delete' });
+  const file = await usecase.print({
+    fileService: new FileService({ documentsPath: process.env.DOCUMENTS_PATH })
+  });
+
+  expect(file).toEqual({
+    contentType: 'text/plain',
+    filename: 'exampleFile.txt',
+    file: fs.readFileSync('documents/exampleFile.txt')
+  });
 });
