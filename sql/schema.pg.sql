@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS servicetemplate;
-create database servicetemplate;
-CREATE USER servicetemplate WITH PASSWORD 'servicetemplate';
-GRANT ALL PRIVILEGES ON DATABASE servicetemplate to servicetemplate;
-ALTER USER servicetemplate CREATEDB;
+DROP DATABASE IF EXISTS eptsservice;
+create database eptsservice;
+CREATE USER eptsservice WITH PASSWORD 'eptsservice';
+GRANT ALL PRIVILEGES ON DATABASE eptsservice to eptsservice;
+ALTER USER eptsservice CREATEDB;
